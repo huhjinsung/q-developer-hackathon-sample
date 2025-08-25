@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cloud Infrastructure Chat</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="banner">
+        <img src="Logo.png" alt="Logo" class="banner-logo">
+        AWScratch : 초등학생도 이해하는 AWS
+    </div>
+    <div class="container">
+        <div class="chat-section">
+
+            <div class="chat-messages" id="chatMessages">
+                <!-- Chat messages will appear here -->
+            </div>
+            <div class="chat-input">
+                <input type="text" id="messageInput" placeholder="메시지를 입력하세요...">
+                <button onclick="sendMessage()">전송</button>
+            </div>
+        </div>
+        <div class="diagram-section">
+            <div id="diagramDisplay">
+                <!-- AWS 3-Tier Architecture -->
+                <div class="architecture">
+                    <!-- AWS Cloud -->
+                    <div class="component aws-cloud">
+                        <img src="images/aws_cloud.png" alt="AWS Cloud">
+                        
+                        <!-- Region -->
+                        <div class="component region">
+                            <img src="images/region.png" alt="AWS Region">
+                            
+                            <!-- VPC -->
+                            <div class="component vpc" onclick="showVpcModal()">
+                                <img src="images/vpc.png" alt="VPC" class="vpc-image">
+                                
+                                <!-- Internet Gateway -->
+                                <div class="component internet-gateway">
+                                    <img src="images/internet_gateway.png" alt="Internet Gateway">
+                                </div>
+                                
+                                <!-- Auto Scaling Group -->
+                                <div class="component asg">
+                                    <img src="images/auto_scaling_group.png" alt="Auto Scaling Group">
+                                </div>
+                                
+                                <!-- ALB -->
+                                <div class="component alb">
+                                    <img src="images/alb.png" alt="Application Load Balancer">
+                                </div>
+                            </div>
+                            
+                            <!-- AZ 1 -->
+                            <div class="component az-1">
+                                <img src="images/az_1.png" alt="Availability Zone 1">
+                                
+                                <!-- Public Subnet AZ1 -->
+                                <div class="component public-subnet-1">
+                                    <img src="images/public_subnet.png" alt="Public Subnet AZ1">
+                                    <div class="component nat-gateway">
+                                        <img src="images/nat_gateway.png" alt="NAT Gateway">
+                                    </div>
+                                </div>
+                                
+                                <!-- Private Subnet 1 AZ1 (Web Tier) -->
+                                <div class="component private-subnet-1-1">
+                                    <img src="images/private_subnet.png" alt="Private Subnet 1 AZ1">
+                                    <div class="component ec2-az1-private1-1">
+                                        <img src="images/ec2.png" alt="EC2 in AZ1 Private Subnet 1-1">
+                                    </div>
+                                    <div class="component ec2-az1-private1-2">
+                                        <img src="images/ec2.png" alt="EC2 in AZ1 Private Subnet 1-2">
+                                    </div>
+                                    <div class="component ec2-az1-private1-3">
+                                        <img src="images/ec2.png" alt="EC2 in AZ1 Private Subnet 1-3">
+                                    </div>
+                                </div>
+                                
+                                <!-- Private Subnet 2 AZ1 (DB Tier) -->
+                                <div class="component private-subnet-1-2">
+                                    <img src="images/private_subnet.png" alt="Private Subnet 2 AZ1">
+                                    <div class="component aurora-1">
+                                        <img src="images/aurora.png" alt="Aurora DB 1">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- AZ 2 -->
+                            <div class="component az-2">
+                                <img src="images/az_2.png" alt="Availability Zone 2">
+                                
+                                <!-- Public Subnet AZ2 -->
+                                <div class="component public-subnet-2">
+                                    <img src="images/public_subnet.png" alt="Public Subnet AZ2">
+                                </div>
+                                
+                                <!-- Private Subnet 1 AZ2 (App Tier) -->
+                                <div class="component private-subnet-2-1">
+                                    <img src="images/private_subnet.png" alt="Private Subnet 1 AZ2">
+                                    <div class="component ec2-az2-private1-1">
+                                        <img src="images/ec2.png" alt="EC2 in AZ2 Private Subnet 1-1">
+                                    </div>
+                                    <div class="component ec2-az2-private1-2">
+                                        <img src="images/ec2.png" alt="EC2 in AZ2 Private Subnet 1-2">
+                                    </div>
+                                    <div class="component ec2-az2-private1-3">
+                                        <img src="images/ec2.png" alt="EC2 in AZ2 Private Subnet 1-3">
+                                    </div>
+                                </div>
+                                
+                                <!-- Private Subnet 2 AZ2 (DB Tier) -->
+                                <div class="component private-subnet-2-2">
+                                    <img src="images/private_subnet.png" alt="Private Subnet 2 AZ2">
+                                    <div class="component aurora-2">
+                                        <img src="images/aurora.png" alt="Aurora DB 2">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- S3 Bucket -->
+                        <div class="component s3-bucket">
+                            <img src="images/s3.png" alt="S3 Bucket">
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- VPC Info Modal -->
+                <div id="vpcModal" class="modal">
+                    <div class="modal-content">
+                        <h3>VPC Information</h3>
+                        <p>VPC입니다!</p>
+                        <div class="modal-buttons">
+                            <button class="cancel-btn" onclick="closeModal('vpcModal')">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="button-container">
+        <!-- 전체 아키텍처 버튼 -->
+        <button class="component-btn create-btn create-all-btn" onclick="createAllArchitecture()">전체 생성</button>
+        <button class="component-btn delete-btn delete-all-btn" onclick="deleteAllArchitecture()">전체 삭제</button>
+        
+        <button class="component-btn create-btn create-vpc-btn" onclick="createVpc()">Create VPC</button>
+        <button class="component-btn delete-btn delete-vpc-btn" onclick="deleteVpc()">Delete VPC</button>
+        <button class="component-btn create-btn create-region-btn" onclick="createRegion()">Create Region</button>
+        <button class="component-btn delete-btn delete-region-btn" onclick="deleteRegion()">Delete Region</button>
+        <button class="component-btn create-btn create-s3-btn" onclick="createS3()">Create S3</button>
+        <button class="component-btn delete-btn delete-s3-btn" onclick="deleteS3()">Delete S3</button>
+        <button class="component-btn create-btn create-alb-btn" onclick="createAlb()">Create ALB</button>
+        <button class="component-btn delete-btn delete-alb-btn" onclick="deleteAlb()">Delete ALB</button>
+        <button class="component-btn create-btn create-igw-btn" onclick="createIgw()">Create IGW</button>
+        <button class="component-btn delete-btn delete-igw-btn" onclick="deleteIgw()">Delete IGW</button>
+        <button class="component-btn create-btn create-nat-btn" onclick="createNatGateway()">Create NAT</button>
+        <button class="component-btn delete-btn delete-nat-btn" onclick="deleteNatGateway()">Delete NAT</button>
+        <button class="component-btn create-btn create-asg-btn" onclick="createAsg()">Create ASG</button>
+        <button class="component-btn delete-btn delete-asg-btn" onclick="deleteAsg()">Delete ASG</button>
+        <button class="component-btn create-btn create-public-subnet-btn" onclick="createPublicSubnet()">Create Public</button>
+        <button class="component-btn delete-btn delete-public-subnet-btn" onclick="deletePublicSubnet()">Delete Public</button>
+        <button class="component-btn create-btn create-private-subnet-btn" onclick="createPrivateSubnet()">Create Private</button>
+        <button class="component-btn delete-btn delete-private-subnet-btn" onclick="deletePrivateSubnet()">Delete Private</button>
+        <button class="component-btn create-btn create-az-btn" onclick="createAz()">Create AZ</button>
+        <button class="component-btn delete-btn delete-az-btn" onclick="deleteAz()">Delete AZ</button>
+        <button class="component-btn create-btn create-db-btn" onclick="createDb()">Create DB</button>
+        <button class="component-btn delete-btn delete-db-btn" onclick="deleteDb()">Delete DB</button>
+        
+        <!-- EC2 Buttons -->
+        <button class="component-btn create-btn create-ec2-1-btn" onclick="createEc2('1')">Create EC2-1</button>
+        <button class="component-btn delete-btn delete-ec2-1-btn" onclick="deleteEc2('1')">Delete EC2-1</button>
+        <button class="component-btn create-btn create-ec2-2-btn" onclick="createEc2('2')">Create EC2-2</button>
+        <button class="component-btn delete-btn delete-ec2-2-btn" onclick="deleteEc2('2')">Delete EC2-2</button>
+        <button class="component-btn create-btn create-ec2-3-btn" onclick="createEc2('3')">Create EC2-3</button>
+        <button class="component-btn delete-btn delete-ec2-3-btn" onclick="deleteEc2('3')">Delete EC2-3</button>
+        <button class="component-btn action-btn shake-ec2-btn" onclick="shakeEc2()">Shake EC2-2</button>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
