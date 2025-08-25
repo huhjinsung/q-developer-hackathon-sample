@@ -24,7 +24,7 @@ AWScratch는 AWS 클라우드 서비스를 누구나, 심지어 초등학생도 
 - **단계별 학습**: AWScratch의 단계별 학습 시스템은 교육학의 스캐폴딩(Scaffolding) 이론을 기반으로 설계되었습니다. 복잡한 클라우드 개념을 소화 가능한 단위로 분해하고, 각 단계에서 충분한 이해와 실습을 거친 후 다음 단계로 진행하도록 구성되어 있습니다.
 
 ## 동영상 데모
-https://github.com/huhjinsung/q-developer-hackathon-sample/blob/main/3.%20demo/Team20.mov
+![데모](3.%20demo/Team20.gif)
 
 ## 리소스 배포하기
 ### 1. 사전 요구 사항
