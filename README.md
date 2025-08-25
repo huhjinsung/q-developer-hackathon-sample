@@ -50,7 +50,7 @@ Terraform 실행 시 버킷 이름을 직접 입력하라는 프롬프트가 나
 var.bucket_name
   S3 버킷 이름 (전역적으로 고유해야 함)
 
-  Enter a value: awscratch-static-website-your-unique-name
+  Enter a value: <고유한 S3 경로를 입력합니다.>
 ```
 
 ### 3. 자동 처리 과정
